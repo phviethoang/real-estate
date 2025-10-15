@@ -3,3 +3,5 @@ cloudscraper
 numpy
 pandas
 playwright
+lxml
+
