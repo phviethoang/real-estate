@@ -355,7 +355,7 @@ def crawl(links_list_url: str, destination = "batdongsan.json", url_html = "tem.
         # get list of links
         links_ls = get_link_list(links_list_url, url_html)
         if links_ls:
-                print("Successfully getting {} urls".format(len(links_ls)
+                print("Successfully getting {} urls".format(len(links_ls)))
                 # filter the unique links
                 url_set = set(links_ls)
                 for url in links_ls:
@@ -388,3 +388,4 @@ if __name__ == "__main__":
         #         print("Successfully get {} links".format(len(links)))
         #         for link in links: print(link)
         # else: print("Fail to get link list")
+
