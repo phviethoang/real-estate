@@ -355,10 +355,12 @@ def crawl(links_list_url: str, destination = "batdongsan.json", url_html = "tem.
         # get list of links
         links_ls = get_link_list(links_list_url, url_html)
         if links_ls:
+                print("Successfully getting {} urls".format(len(links_ls)
                 # filter the unique links
                 url_set = set(links_ls)
                 for url in links_ls:
                         if url in url_set:
+                                url = "https://batdongsan.com.vn" + url
                                 html_text = get_html_pass_cloudflare(url)
                                 if html_text:
                                         html_parse = parse_html(html_text)
@@ -380,29 +382,9 @@ if __name__ == "__main__":
         parser.add_argument('--save_path', type = str, default = 'batdongsan.json', help = 'where the crawled data is saved')
         args = parser.parse_args()
 
-        # crawl(args.links_list_url, args.save_path, args.links_list_html)
-        links = get_link_list(args.links_list_url, args.links_list_html)
-        if links: 
-                print("Successfully get {} links".format(len(links)))
-                for link in links: print(link)
-        else: print("Fail to get link list")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        crawl(args.links_list_url, args.save_path, args.links_list_html)
+        # links = get_link_list(args.links_list_url, args.links_list_html)
+        # if links: 
+        #         print("Successfully get {} links".format(len(links)))
+        #         for link in links: print(link)
+        # else: print("Fail to get link list")
