@@ -343,7 +343,7 @@ def save_data(ls_of_dict_object, save_file = "batdongsan.json"):
         with open(save_file, "w", encoding = "utf-8") as f:
                 json.dump(ls_of_dict_object, f, ensure_ascii = False, indent = 4)
 
-def crawl(links_list_url: str, destination = "batdongsan.json"):
+def crawl(links_list_url: str, destination = "batdongsan.json", url_html = "tem.html"):
         '''
         Function crawls data and save data into the destination
         '''
@@ -353,7 +353,7 @@ def crawl(links_list_url: str, destination = "batdongsan.json"):
                         prev_data = json.load(f)
         else: prev_data = []
         # get list of links
-        links_ls = get_link_list(links_list_url)
+        links_ls = get_link_list(links_list_url, url_html)
         if links_ls:
                 # filter the unique links
                 url_set = set(links_ls)
@@ -380,10 +380,13 @@ if __name__ == "__main__":
         parser.add_argument('--save_path', type = str, default = 'batdongsan.json', help = 'where the crawled data is saved')
         args = parser.parse_args()
 
-        # crawl(args.links_list_url, args.save_path)
+        # crawl(args.links_list_url, args.save_path, args.links_list_html)
         links = get_link_list(args.links_list_url, args.links_list_html)
-        if links: print("Successfully get {} links".format(len(links)))
+        if links: 
+                print("Successfully get {} links".format(len(links)))
+                for link in links: print(link)
         else: print("Fail to get link list")
+
 
 
 
