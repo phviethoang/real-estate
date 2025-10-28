@@ -1,5 +1,5 @@
 # real-estate
 
-BTL của nhóm 26 môn IT4931 - Bigdata - HUST
+## **[BRANCH] | D.M.Hung**
 
-Đề tài: Xây dựng Hệ thống thu thập, lưu trữ, phân tích, xử lý dữ liệu bất động sản
+This branch has just uploaded a folder, which contains `Kafka.md`. This file provides detailed instructions to deploy a kafka system with a LAN. 
