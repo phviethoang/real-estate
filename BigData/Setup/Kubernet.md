@@ -267,7 +267,7 @@ Install Kubernet cores : `kubelet`, `kubeadm`, `kubectl`. by the similar way to 
 
 * Install and set up key for repository of kubernet
     ```bash
-    curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
     ```
 
@@ -311,6 +311,7 @@ This must be set up in the master node
     ```bash
     kubectl get nodes
     ```
+
 
 
 
