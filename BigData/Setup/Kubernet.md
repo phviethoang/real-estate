@@ -210,7 +210,7 @@ In the right column, a section corresponding to the virtual machine has been cre
 * Config the network variables: Open configuration file and config parameter `sysctl`:
     ```bash 
     # Cấu hình tham số sysctl cho mạng Kubernetes
-    cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+    cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes.conf
     net.bridge.bridge-nf-call-iptables  = 1
     net.bridge.bridge-nf-call-ip6tables = 1
     net.ipv4.ip_forward                 = 1
@@ -311,6 +311,7 @@ This must be set up in the master node
     ```bash
     kubectl get nodes
     ```
+
 
 
 
