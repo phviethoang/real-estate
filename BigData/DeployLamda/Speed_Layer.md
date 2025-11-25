@@ -81,11 +81,10 @@ Define the design of Kafka: Create a `yaml` file to show our requirements of Kaf
                 size: 5Gi
     ```
 
-## **===Step| 4**
-Apply configuration:
-```bash
-kubectl apply -f kafka.yaml -n kafka
-```
+* Apply configuration:
+    ```bash
+    kubectl apply -f kafka.yaml -n kafka
+    ```
 
 * Supervise the creation progress:
     ```bash
@@ -95,7 +94,20 @@ kubectl apply -f kafka.yaml -n kafka
     # Get the Pod Zookeeper and Kafka Broker being created
     kubectl get pods -n kafka
     ```
+* If delete kafka cluster:
+  ```bash
+  kubectl delete kafka <cluster_name> -n <namespace>
+  
+  kubectl delete pvc -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction may last too long
 
+  kubectl delete cm,secret -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction will delete all config of brokers and zookeeper
+
+  kubectl get pod -n <namespace>
+  # --> Check if all of the elements of cluster being cleaned
+  ```
+  
 ## **==Step| 5**
 Create topics for data stream:
 * Create a new `yaml` file to define topics in kafka:
@@ -163,5 +175,6 @@ Enter command `exit` to exit from the bash of client pod
     ```
 
 **NOTE:** Input the text, `Enter` to send, `CTRL + C` to exit
+
 
 
