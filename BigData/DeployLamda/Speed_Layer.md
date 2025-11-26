@@ -102,10 +102,16 @@ Define the design of Kafka: Create a `yaml` file to show our requirements of Kaf
   # --> This instruction may last too long
 
   kubectl delete cm,secret -l strimzi.io/cluster=<cluster_name> -n <namespace>
-  # --> This instruction will delete all config of brokers and zookeeper
+  # --> This instruction will delete all configs of brokers and zookeeper
+
+  kubectl delete pod -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction will delete all broker, zookeeper pod of cluster
 
   kubectl get pod -n <namespace>
-  # --> Check if all of the elements of cluster being cleaned
+  # --> Get the operator pod name of cluster: strimzi-cluster-operator-xxxxxx
+
+  kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
+  # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
   ```
   
 ## **==Step| 5**
@@ -175,6 +181,7 @@ Enter command `exit` to exit from the bash of client pod
     ```
 
 **NOTE:** Input the text, `Enter` to send, `CTRL + C` to exit
+
 
 
 
