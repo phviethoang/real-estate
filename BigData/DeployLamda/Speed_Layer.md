@@ -31,7 +31,7 @@ kubectl get pods -n kafka
 
 ## **===Step| 3**
 
-Define the design of Kafka: Create a `yaml` file to show our requirements of Kafka cluster ( name of cluster, namespace, how many zookeepers, how many brokers,...)
+Define the design of Kafka cluster: Create a `yaml` file to show our requirements of Kafka cluster ( name of cluster, namespace, listeners,...)
 * Create a `yaml` file  
     ```bash
     sudo nano kafka.yaml
@@ -61,8 +61,29 @@ Define the design of Kafka: Create a `yaml` file to show our requirements of Kaf
         entityOperator:
             topicOperator: {}
             userOperator: {}
+    ```
+    
+* Apply configuration:
+    ```bash
+    kubectl apply -f kafka.yaml -n kafka
+    ``` 
+* Supervise the creation progress:
+    ```bash
+    # Get the state of Kafka Cluster
+    kubectl get kafka -n kafka
+    # The result will show the table of kafka cluster with columns 'READY', 'METADATA', 'STATE', 'WARNING'
+    # There should be a row with name being the name of cluster we have configed
+    # If brokers of cluster have not been created yet, the METADATA and READY columns are empty
+    ```
+## **===Step| 4**
+Define the design of Kafka broker: Create a `yaml` file to show our requirements of Kafka brokers ( name of broker, namespace, how many zookeepers, how many brokers, which broker are controller, how many replicas,...)
 
-    # Config to create brokers:
+* Create a `yaml` file  
+    ```bash
+    sudo nano kafka_broker.yaml
+    ```
+* In file, enter this configuration and save:
+    ```bash
     apiVersion: kafka.strimzi.io/v1beta2
     kind: KafkaNodePool
     metadata:
@@ -81,39 +102,18 @@ Define the design of Kafka: Create a `yaml` file to show our requirements of Kaf
                 size: 5Gi
     ```
 
-* Apply configuration:
-    ```bash
-    kubectl apply -f kafka.yaml -n kafka
-    ```
-
 * Supervise the creation progress:
     ```bash
-    # Get the state of Kafka Cluster
-    kubectl get kafka -n kafka
-
+    kubectl get kafkanodepool -n <namespace>
+    # --> The result is a table which should show the broker with the number we have configed
+    
     # Get the Pod Zookeeper and Kafka Broker being created
-    kubectl get pods -n kafka
-    ```
-* If delete kafka cluster:
-  ```bash
-  kubectl delete kafka <cluster_name> -n <namespace>
-  
-  kubectl delete pvc -l strimzi.io/cluster=<cluster_name> -n <namespace>
-  # --> This instruction may last too long
+    kubectl get pods -n kafk
+    # --> The result should show the pod corressonding to the brokers created
 
-  kubectl delete cm,secret -l strimzi.io/cluster=<cluster_name> -n <namespace>
-  # --> This instruction will delete all configs of brokers and zookeeper
-
-  kubectl delete pod -l strimzi.io/cluster=<cluster_name> -n <namespace>
-  # --> This instruction will delete all broker, zookeeper pod of cluster
-
-  kubectl get pod -n <namespace>
-  # --> Get the operator pod name of cluster: strimzi-cluster-operator-xxxxxx
-
-  kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
-  # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
-  ```
-  
+    kubectl get kafka -n <namespace: here is 'kafka'>
+    # --> The row of cluster should have field METADATA being 'KRAFT' and the field READY being 'True'
+    ```  
 ## **==Step| 5**
 Create topics for data stream:
 * Create a new `yaml` file to define topics in kafka:
@@ -181,6 +181,32 @@ Enter command `exit` to exit from the bash of client pod
     ```
 
 **NOTE:** Input the text, `Enter` to send, `CTRL + C` to exit
+
+## **===Step| Step addition**
+
+* If delete kafka cluster:
+  ```bash
+  kubectl delete kafka <cluster_name> -n <namespace>
+  # --> This instruction will delete cluster
+
+  kubectl delete kafkanodepool <broker-name> -n <namespace>
+  # --> This instruction will remove a particular broker
+  
+  kubectl delete pvc -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction may last too long
+
+  kubectl delete cm,secret -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction will delete all configs of brokers and zookeeper
+
+  kubectl delete pod -l strimzi.io/cluster=<cluster_name> -n <namespace>
+  # --> This instruction will delete all broker, zookeeper pod of cluster
+
+  kubectl get pod -n <namespace>
+  # --> Get the operator pod name of cluster: strimzi-cluster-operator-xxxxxx
+
+  kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
+  # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
+  ```
 
 
 
