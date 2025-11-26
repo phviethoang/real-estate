@@ -101,7 +101,11 @@ Define the design of Kafka broker: Create a `yaml` file to show our requirements
                 type: persistent-claim
                 size: 5Gi
     ```
-
+* Apply configuration:
+    ```bash
+    kubectl apply -f kafka_broker.yaml -n kafka
+    ```
+    
 * Supervise the creation progress:
     ```bash
     kubectl get kafkanodepool -n <namespace>
@@ -207,6 +211,7 @@ Enter command `exit` to exit from the bash of client pod
   kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
   # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
   ```
+
 
 
 
