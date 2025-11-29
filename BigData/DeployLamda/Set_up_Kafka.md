@@ -1,4 +1,4 @@
-# **DEPLOYING SPEED LAYER**
+# **SET UP KAFKA**
 <br><br>
 
 
@@ -211,6 +211,7 @@ Enter command `exit` to exit from the bash of client pod
   kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
   # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
   ```
+
 
 
 
