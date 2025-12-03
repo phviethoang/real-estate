@@ -1,0 +1,31 @@
+# Config to create cluster
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+    name: my-kafka-cluster
+    namespace: kafka
+spec:
+    kafka:
+        version: 4.1.0
+        listeners:
+            # Listener to messages of Pods in K8s (such as Spark)
+            - name: plain
+                port: 9092
+                type: internal
+                tls: false
+            # Exteranl Listener to the output connection (optional)
+            - name: external
+                port: 9094
+                type: nodeport # Use NodePort to access outside the K8s
+                tls: false
+                configuration:
+                  brokers:
+                  - broker: 0
+                    advertisedHost: 3.10.139.221
+                  - broker: 1
+                    advertisedHost: 3.10.139.221
+                  - broker: 2
+                    advertisedHost: 3.10.139.221
+    entityOperator:
+        topicOperator: {}
+        userOperator: {}
