@@ -12,7 +12,7 @@ __________________
               |                                                     
      _________V_______                                     ____________________  
      |  Speed Layer: |                                     |  Batch Layer     |
-     |   Kafka       |+-------[Spark Streaming]----------->| Database: HDFS   |                   
+     |   Kafka       |--------[Spark Streaming]----------->| Database: HDFS   |                   
      |_______________|                                     |__________________|        
               |                                                       |  
               |                                                       |
