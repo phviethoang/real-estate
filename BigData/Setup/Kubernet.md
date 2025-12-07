@@ -305,12 +305,43 @@ This must be set up in the master node
 
 ## **===4| Set up worker node**
 
+* Get the file `admin.conf` from the master node:
+  * Set up to allow all traffic between master node and worker node
+  * Open a port in worker node to receive file from master node:
+    ```bash
+    sudo sh -c 'nc -l -p <port: here is 1234> > /etc/kubernetes/admin.conf'
+    ```
+  * Send file in master node:
+    ```bash
+    sudo sh -c 'nc <IP_MASTER_NODE> <port: here is 1234> < /etc/kubernetes/admin.conf'
+    ```
+  * Waiting for a few minutes, then close the port in worker node by `CTRL + C`
+    --> the port in master node is also closed automatically
+  * Check if the file is sent:
+    ```bash
+    # Check file existed
+    ls /etc/kubernetes
+    # --> the result should show a list of files and folders including file 'admin.conf'
+
+    # Check the content of file
+    sudo cat /etc/kubernetes/admin.conf
+    # --> the file should be exactly the same as the file '/etc/kubernetes/admin.conf' in master node
+    ```
+    
+* Config Kubectl:
+  ```bash
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  ```
+  
 * Join cluster: Run the instruction at the above step to join cluster
 
 * Confirm in master node:
     ```bash
     kubectl get nodes
     ```
+
 
 
 
