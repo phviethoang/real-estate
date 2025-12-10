@@ -313,7 +313,7 @@ This must be set up in the master node
     ```
   * Send file in master node:
     ```bash
-    sudo sh -c 'nc <IP_MASTER_NODE> <port: here is 1234> < /etc/kubernetes/admin.conf'
+    sudo sh -c 'nc <IP_WORKER_NODE> <port: here is 1234> < /etc/kubernetes/admin.conf'
     ```
   * Waiting for a few minutes, then close the port in worker node by `CTRL + C`
     --> the port in master node is also closed automatically
@@ -341,6 +341,7 @@ This must be set up in the master node
     ```bash
     kubectl get nodes
     ```
+
 
 
 
