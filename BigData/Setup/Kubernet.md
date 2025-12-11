@@ -4,12 +4,6 @@
 ## **INSTRODUCTION**
 ---
 
-Kubernet or K8s is a tool of managing the activities of a group of nodes. It is responsible for managing: which nodes are dead, how to balance the load of nodes in a cluster,.... And the management is automatic and more believable than manual management.
-
-
-## **INSTRODUCTION**
----
-
 Kubernete or K8s is a tool of managing the activities of a group of nodes. It is responsible for managing: which nodes are dead, how to balance the load of nodes in a cluster,.... And the management is automatic and more believable than manual management. That means we need not to care about how the nodes communicate with each other, and can spend more attention on the logic of the system instead.
 
 
@@ -209,7 +203,7 @@ In the right column, a section corresponding to the virtual machine has been cre
     # Turn of SWAP forever
     sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
     ```
-* Turn on module `overlay` and module `br_netfilter`. `overlay` is a layering file system( it uses many layers to manage files), this is the platform where the Kubernet bases on to manage files in cluster for effectively storing, reading and writing. `br_netfilter` allows network communication. 
+* Turn on module `overlay` and module `br_netfilter`. `overlay` is a layering file system( it uses many layers to manage files), this is the platform where the Kubernet bases on to manage files in cluster for effectively storing, reading and writing. `br_netfilter` allows network communication among worker nodes.
 
     Open configuration file and config:
     ```bash
@@ -356,6 +350,7 @@ This must be set up in the master node
     ```bash
     kubectl get nodes
     ```
+
 
 
 
