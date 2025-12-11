@@ -60,39 +60,38 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
     * Config the file:
         ```yaml
         apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-            name: kafka-producer-deployment
-            namespace: kafka  # Đảm bảo triển khai trong Namespace Kafka
-            labels:
-                app: kafka-producer
+        kind: Deployment             # Kind of resource, here using 'Deployment'
+        metadata:                     
+            name: name-of-deployment # example: kafka-producer-deployment
+            namespace: namepace      # example: kafka
+            labels:                  # --> label for managing deployment
+                app: kafka-producer  
         spec:
-            replicas: 1
-            selector:
-                matchLabels:
-                    app: kafka-producer
-            template:
+            replicas: 1                   # how many pods that this deployment runs
+            selector:                     # define how the deployment find its pods
+                matchLabels:              # --> this means the deployment will find its pod by find the label matched
+                    app: kafka-producer   # name of pod needed to be found
+            template:                     # define struct of a pod
                 metadata:
-                    labels:
+                    labels:               # must be the same as the matchlabel
                         app: kafka-producer
-                spec:
-                    containers:
-                    - name: kafka-producer-container
-                    # THAY THẾ: Sử dụng image bạn vừa push lên Docker Hub (hoặc Registry khác)
-                      image: hdoan043/test-kafka:v1 
+                spec:                                          
+                    containers:                                 # Define the parameter for container in pod
+                    - name: kafka-producer-container               # Set name for container
+                      image: hdoan043/test-kafka:v1                # The image in docker hub that encapsulated an application
                     
                       # Đặt Biến Môi trường cho Kafka Broker
                       # Tên service Bootstrap Server của bạn là: my-cluster-kafka-bootstrap:9092
                       # (Dựa trên thông tin kết nối trong image_d5410d.png)
-                      env:
-                      - name: KAFKA_BROKERS
-                        value: my-cluster-kafka-bootstrap:9092
-                      - name: KAFKA_TOPIC
-                        value: my-topic  # Thay thế bằng topic của bạn (ví dụ: raw-data-stream hoặc my-topic)
+                      env:                                       # Set environment variables 
+                      - name: name_of_environment_variable_1     # KAFKA_BROKERS
+                        value: value_of_environment_variable_1   # my-cluster-kafka-bootstrap:9092
+                      - name: name_of_environment_variable_2     # KAFKA_TOPIC
+                        value: value_of_environmetn_variable_2   # my-topic  
                     
                       # Nếu producer.py của bạn chạy trong vòng lặp vô hạn, 
                       # Container luôn chạy (Running)
-                      resources:
+                      resources:                                 # Define resource
                         limits:
                             memory: "128Mi"
                             cpu: "500m"
@@ -112,4 +111,5 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
         ```
         --> The result should show the pod that we have configed and the status should be `Running`
     * When successfully created, the new pod will automatically run the container inside. Note that the container is non-interactive, this means we can not input text to it like in the console. 
+
 
