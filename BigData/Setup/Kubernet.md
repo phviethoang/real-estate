@@ -7,37 +7,52 @@
 Kubernet or K8s is a tool of managing the activities of a group of nodes. It is responsible for managing: which nodes are dead, how to balance the load of nodes in a cluster,.... And the management is automatic and more believable than manual management.
 
 
+## **INSTRODUCTION**
+---
+
+Kubernete or K8s is a tool of managing the activities of a group of nodes. It is responsible for managing: which nodes are dead, how to balance the load of nodes in a cluster,.... And the management is automatic and more believable than manual management. That means we need not to care about how the nodes communicate with each other, and can spend more attention on the logic of the system instead.
+
+
 ## **HOW DOES THE KUBERNET MANAGE NODES?**
 ---
 
-Kubernet is exactly a tool of containers management. This means Kubernet supervises and controls the container running in each node to ensure the work of the whole cluster. 
+Kubernete is exactly a tool of containers management. This means Kubernet supervises and controls the pods running in each node to ensure the work of the whole cluster. 
 
-*Container* is an application which encapsulates fully environment, tools,.... serving for the running. Therefore, containers can be run imediately as an application without manual installing outside tools or libraries like deploying an open-source code. Like applications, there are many types of containers: *Kafka container*, *Spark container*,....
+*Pod* is the smalest unit on Kubernete. Kubernete considers a pod as a logic application which is responsible for a particular function. There are many types of pods with different responsibilities: *Kafka pod*, *Spark pod*,....
 
-To run containers, in each node must be equiped with the *container runtime*. And kubernet interacts with the *container runtime* to controls all of the containers in each node.
+Remember that a pod is just for logical management of K8s, but not responsible for the work of application. The main function of pod depends on the container inside it. *Container* encapsulates fully environment, tools,..... so that it can be run imediately as an application without manual installing outside tools or libraries like deploying an open-source code.  A *Pod* is usually has a container, but sometimes contains several containers working together. So, to run pods, each node must be equiped with the *container runtime*. And kubernet interacts with the *container runtime* to controls all of the containers in each pod of node.
 
 ```txt
-                                +--------------+
-                                |   Kubernet   |
-                                +--------------+
-                                        |
-                +-----------------------+--------------------+
-                |                                            |           
-+---------------|----------------+          +----------------|---------------+
-|   +---Container Runtime----+   |          |   +---Container Runtime----+   |
-|   |  +-----------+         |   |          |   |  +-----------+         |   |
-|   |  | Kafka     |         |   |          |   |  | Kafka     |         |   |
-|   |  | container |         |   |          |   |  | container |         |   |
-|   |  +-----------+         |   |          |   |  +-----------+         |   |
-|   |       +-----------+    |   |          |   |       +-----------+    |   |
-|   |       | Spark     |    |   |          |   |       | Spark     |    |   |
-|   |       | container |    |   |          |   |       | container |    |   |
-|   |       +-----------+    |   |          |   |       +-----------+    |   |
-|   +------------------------+   |          |   +------------------------+   |
-+----------NODE------------------+          +----------NODE------------------+
+                        KUBERNETE SYSTEM
+                                           
+                       +------------------------------------
+                       |                                   |    
+                       |                                   |
+       +-------------NODE-------------+                    |
+       |                              |                    |
+       |  +-------Kafka Pod-------+   |                    |
+       |  |  [Kafka Container]    |---|----+               |
+       |  +-----------------------+   |    |               |
+       +------------------------------+    |               |
+                                           |               |     
+                                        [Communicate]      |
+                                           |               |
+       +-------------NODE-------------+    |          +----------+  
+       |                              |    |          | NODE     |   
+       |  +-------Spark Pod-------+   |    |          | MANAGER  |   
+       |  |  [Spark Container]    |---|----+          +----------+ 
+       |  +-----------------------+   |    |               |
+       |                              | [Communicate]      |
+       |  +---ElasticSearch Pod---+   |    |               |
+       |  |    [ES Container]     |---|----+               |
+       |  +-----------------------+   |                    |
+       +------------------------------+                    |
+                       |                                   |
+                       |                                   |
+                       +-----------------------------------+
+
 
 ```
-
 ## **ELEMENTS OF KUBERNET**
 ---
 The above section only describes the general way to manage nodes in a cluster of Kubernet. In fact, the whole Kubernet system contains more complex elements.
@@ -341,6 +356,7 @@ This must be set up in the master node
     ```bash
     kubectl get nodes
     ```
+
 
 
 
