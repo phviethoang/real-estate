@@ -19,6 +19,29 @@ To send message to kafka system, the application must be run as a pod in Kuberne
     * Create new `txt` file
     * List all the libraries that are used in code
     * Save the file into the same folder with the file `main.py`
+      
+* Prepare file `project.toml`: This is for some application requiring Java to run
+   * Create a file `project.toml`
+   * Config:
+     ```toml
+     [_]
+     schema-version = "0.2"
+      
+     [com.heroku.buildpacks.deb-packages]
+     install = [
+         "openjdk-17-jre-headless",
+         "procps"
+     ]
+     ```
+   * Save the file into the same folder with the file `main.py`
+
+ * Prepare file `.python-version`:
+   * Create a file `.python-version`
+   * In the file, config the version of python:
+     ```txt
+     3.10
+     ```
+   * Save the file into the same folder with the file `main.py`
 
 * Encapsule the Programe by Encapsuler: Encapsule by `Docker` and `pack`
     * 1 - Install `Docker Desktop`
@@ -36,11 +59,11 @@ To send message to kafka system, the application must be run as a pod in Kuberne
         * Change to the working directory which contains the file `main.py`, `requirements.txt` and `Procfile`
         * Login in Docker Desktop, remember the username in Docker Desktop. Ensure the Docker Desktop running.
         * Run instruction:
-            ```bash
-            pack build <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest> \
-                --builder gcr.io/buildpacks/builder:v1 \
-                --publish \
-                --env GOOGLE_ENTRYPOINT="python main.py"
+            ```shell
+            pack build <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest> `
+                --path . `
+                --builder heroku/builder:22 `
+                --publish
             ```
             --> Wait for minutes, then, there will be an announcement of success
         * Confirm the image being pushed successfully:
@@ -111,6 +134,7 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
         ```
         --> The result should show the pod that we have configed and the status should be `Running`
     * When successfully created, the new pod will automatically run the container inside. Note that the container is non-interactive, this means we can not input text to it like in the console. 
+
 
 
 
