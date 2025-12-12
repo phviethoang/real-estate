@@ -133,8 +133,64 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
         kubectl get pod -n <namespace>
         ```
         --> The result should show the pod that we have configed and the status should be `Running`
-    * When successfully created, the new pod will automatically run the container inside. Note that the container is non-interactive, this means we can not input text to it like in the console. 
+    * When successfully created, the new pod will automatically run the container inside. Note that the container is non-interactive, this means we can not input text to it like in the console.
+ 
+## **===3| Clean and free up storage**
 
+Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\disk\docker_data.vhdx`. When building image, there are many packages downloaded and saved automatically, making the storage of docker larger, that means the file `docker_data.vhdx` will increase through the time. This may give bad effect on the performance of the local computer because the virtual memory of computer are soon used up. So, the storage need to be cleaned:
 
+* Clean docker volume:
+  * Check the storage:
+    ```bash
+    docker system df
+    ```
+    ---> This shows a table indicating clearly the volume used for each part
+    
+  * Clean volume:
+    ```bash
+    docker volume ls
+    ```
+    --> this shows all the volumes used by docker
+    --> Clean them by:
+    ```bash
+    # Delete particular volumes
+    docker volume rm <volume_name_1> <volume_name_2> ...
+    # <volume_name_1>, <volume_name_2>,... are get by "docker volume ls"
 
+    # Delete all volumes
+    docker volume ls -q | Select-String "pack" | ForEach-Object { docker volume rm $_ }
+    ```
+  * Recheck the storage:
+    ```bash
+    docker system df
+    ```
+    --> This should show that the storage for `Local volume` is `0`
 
+* Free storage: the file `docker_data.vhdx` is bigger through the time because of the automatically downloaded images and packages. Although the above step cleans the volume of docker, the file `docker_data.vhdx` can not be automatically shorten. So that we have to shorten it manually:
+  * Open terminal and run:
+    ```bash
+    wsl --shutdown
+    ```
+  * Open `diskpart`:
+    ```bash
+    diskpart
+    ```
+    --> an other command screen is shown
+  * Enter instruction:
+    ```bash
+    # [1] - Choose file that need to be shorten
+    select vdisk file="C:\Users\Admin\AppData\Local\Docker\wsl\disk\docker_data.vhdx"
+
+    # [2] - Change it to the mode read-only
+    attach vdisk readonly
+
+    # [3] - Compress file --> this will remove all of the redundant spaces which are left when cleaning volumes in step 1
+    compact vdisk
+
+    # [4] - Detach the file
+    detach vdisk
+
+    # [5] - quit
+    exit
+    ```
+* Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
