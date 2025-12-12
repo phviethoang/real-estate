@@ -20,52 +20,64 @@ To send message to kafka system, the application must be run as a pod in Kuberne
     * List all the libraries that are used in code
     * Save the file into the same folder with the file `main.py`
       
-* Prepare file `project.toml`: This is for some application requiring Java to run
-   * Create a file `project.toml`
-   * Config:
-     ```toml
-     [_]
-     schema-version = "0.2"
+* Prepare file `Dockerfile`:
+    * Create new file and set the name `Dockerfile` without extension
+    * In the file, config:
+      ```Dockerfile
+      # Base Image có sẵn Python và các công cụ cơ bản
+      FROM python:3.10-slim-bullseye
       
-     [com.heroku.buildpacks.deb-packages]
-     install = [
-         "openjdk-17-jre-headless",
-         "procps"
-     ]
-     ```
+      # 1. CÀI ĐẶT JAVA( OpenJDK 17) VÀ CÁC CÔNG CỤ CƠ BẢN
+      RUN apt-get update && \
+          apt-get install -y openjdk-17-jre-headless procps && \
+          rm -rf /var/lib/apt/lists/*
+      
+      # 2. THIẾT LẬP BIẾN MÔI TRƯỜNG CHO JAVA (FIX LỖI JAVA_HOME)
+      # /usr/lib/jvm/java-17-openjdk-amd64 là đường dẫn chuẩn sau khi apt-get install
+      ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+      ENV PATH=$JAVA_HOME/bin:$PATH
+      
+      # 3. CÀI ĐẶT CÁC THƯ VIỆN PYTHON (PYSPARK)
+      # Thiết lập thư mục làm việc trong Container
+      WORKDIR /app
+      
+      # Copy file requirements.txt vào thư mục làm việc
+      COPY requirements.txt .
+      
+      # Cài đặt thư viện (Bao gồm pyspark)
+      RUN pip install --no-cache-dir -r requirements.txt
+      
+      # 4. COPY CODE
+      # Copy các file code của bạn vào Container
+      COPY main.py .
+      # (Nếu có các file code khác như config.py, hãy thêm vào đây)
+      
+      # 5. LỆNH CHẠY (ENTRYPOINT)
+      # Lệnh này sẽ được thực thi khi Container khởi động
+      CMD ["python3", "main.py"]
+      ```
    * Save the file into the same folder with the file `main.py`
-
- * Prepare file `.python-version`:
-   * Create a file `.python-version`
-   * In the file, config the version of python:
-     ```txt
-     3.10
-     ```
-   * Save the file into the same folder with the file `main.py`
-
-* Encapsule the Programe by Encapsuler: Encapsule by `Docker` and `pack`
+     
+* Encapsule the Programe by Encapsuler: Encapsule by `Docker`: Docker has its core called `Docker Engine` and runs on operator system Linux. `Docker Desktop` is an application providing an interface for user to use `Docker Engine` easier, or user can use `Docker Engine` by CLI:
     * 1 - Install `Docker Desktop`
         * Access the link https://docs.docker.com/desktop/setup/install/windows-install/ and download Docker Desktop Installer for `Windows`
         * Follow the instruction to install `Docker Desktop`. In `Docker Desktop`, there is an engine named `Docker Engine` which is the most important part of the encapsulation
         * Confirm the installation: `docker --version`
-
-    * 2 - Install `pack`:
-        * Open `PowerShell` as administrator
-        * Install `pack` by : `choco install pack`
-        * Confirm the installation: `pack version`
+        --> Because Docker runs on Linux, when Docker Desktop is installed and activated, tool WSL is automatically activated and installs Ubuntu in Windows. Then, the Docker Desktop will run on this virtual Ubuntu, but not directly on Windows.
 
     * 3 - Encapsule:
         * Open `Terminal` or `cmd`
-        * Change to the working directory which contains the file `main.py`, `requirements.txt` and `Procfile`
         * Login in Docker Desktop, remember the username in Docker Desktop. Ensure the Docker Desktop running.
-        * Run instruction:
+        * Run instruction to build image:
             ```shell
-            pack build <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest> `
-                --path . `
-                --builder heroku/builder:22 `
-                --publish
+            docker build -t <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest> `
+               <path to folder containing file main.py>
             ```
             --> Wait for minutes, then, there will be an announcement of success
+        * Push image to docker hub:
+             ```shell
+             docker push <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest>
+             ```
         * Confirm the image being pushed successfully:
             * Access `Docker Hub`
             * Sign in
@@ -202,4 +214,5 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
