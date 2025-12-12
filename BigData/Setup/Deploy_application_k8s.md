@@ -183,6 +183,14 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
 
     # [2] - Change it to the mode read-only
     attach vdisk readonly
+    # (!!!) If error: DiskPart has encountered an error: The process cannot access the file because it is being used by another process.
+    # --> [2.1] CTRL + Shilf + ESC -> open Task Manager
+    # --> [2.2] In the left bar, choose tab "Performance"
+    # --> [2.3] In the top right corner, beside the button "Run new task": Click in to the icon of 3 dots -> click into "Resource Monitor"
+    # --> [2.4] In the Resource Monitor window, choose tab "CPU"
+    # --> [2.5] In the tab "CPU": search "docker_data.vhdx" in section "Associated Handles"
+    # --> [2.6] Right click in the item shown and end process
+    # --> [2.7] Retry instruction "attach vdisk readonly"
 
     # [3] - Compress file --> this will remove all of the redundant spaces which are left when cleaning volumes in step 1
     compact vdisk
@@ -194,3 +202,4 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
