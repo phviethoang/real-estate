@@ -197,6 +197,8 @@ Config to allow TCP through the public port of elastic and kibana
 
 ## **===7| Test passing data from Spark to Elastic Search**
 
+View file `SparkToES.md`
+
 * Install `pyspark`
     ```bash
     pip install pyspark
@@ -270,40 +272,14 @@ Config to allow TCP through the public port of elastic and kibana
             .option("es.nodes.wan.only",     "true") \
             .option("checkpointLocation", "/tmp/spark-checkpoint-es") \ 
             .start()
+        result.awaitTermination()
         print("[DONE] Successfully write data into elastic search with index {}".format(ES_INDEX))
     except Exception as e:
         print("[FAIL] Error when writing data: {}".format(e))
     ```
-* Stop writting:
-    ```python
-    query.awaitTermination()
-    ```
-
-* Run the code with Linux Operator:
-    * Find and run `wsl` in search
-    * Install environment:
-        ```bash
-        sudo apt update
-        sudo apt install openjdk-11-jdk python3-pip -y
-        ```
-    * Create virtual environment:
-        ```bash
-        # Install venv
-        sudo apt install python3-venv
-
-        # Create virtual environment
-        python3 -m venv <virtual_environment_name>
-
-        # Activate virtual environment
-        source <virtual_environment_name>/bin/activate
-        ```
-    * Install `pyspark` in virtual environment:
-        ```bash
-        pip install pyspark
-        ```
-    * Change directory to the python file: the file system in Linux using `wsl` is just a bit different from Windows: The partition `C` or `E` in Windows is corresponding with the folder `/mnt/c` or `/mnt/e` in Linux
 
 * Check the data is sent successfully:
     * Access the link `http://<PUBLIC_IP_OF_INSTANCE>:<PUBLIC_PORT_OF_ELASTIC_SEARCH>/<NAME_OF_INDEX>/_search
     * Input username and password if required
     * The data shoule be shown, that means spark has sent successfully and the Elastic Search can receive data
+
