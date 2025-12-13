@@ -133,8 +133,8 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
                         requests:
                             memory: "64Mi"
                             cpu: "250m"
-                       # If pod are crashed immediately and AI instructs to run "kubectl exec -it ..." for debugging,
-                       # Add these 2 configurations for keep pod running so that can run "kubectl exec -it..."
+                       # If pod is crashed immediately and AI instructs to run "kubectl exec -it ..." for debugging,
+                       # Add these 2 configurations for keep pod running so that we can run "kubectl exec -it..."
                        # Then, when finishing debuging, delete these 2 instructions
                       command: ["/bin/sh", "-c"]
                       args: ["while true; do sleep 3600; done;"] 
@@ -231,6 +231,7 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
 
