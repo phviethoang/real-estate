@@ -73,8 +73,8 @@ To send message to kafka system, the application must be run as a pod in Kuberne
             docker build -t <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest> `
                <path to folder containing file main.py>
             ```
-            --> Wait for minutes, then, there will be an announcement of success
-        * Push image to docker hub:
+            --> Wait for minutes, then, there will be an announcement of success. The image will be built and store in local device before being pushed to Docker Hub
+        * Push image to docker hub, so that it can be access everywhere:
              ```shell
              docker push <lower case of usename of Docker Desktop>/<name of image>:<version: v1/v2/.../latest>
              ```
@@ -151,14 +151,14 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
 
 Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\disk\docker_data.vhdx`. When building image, there are many packages downloaded and saved automatically, making the storage of docker larger, that means the file `docker_data.vhdx` will increase through the time. This may give bad effect on the performance of the local computer because the virtual memory of computer are soon used up. So, the storage need to be cleaned:
 
-* Clean docker volume:
+* Clean docker image:
   * Check the storage:
     ```bash
     docker system df
     ```
     ---> This shows a table indicating clearly the volume used for each part
     
-  * Clean volume:
+  * Clean image:
     ```bash
     docker volume ls
     ```
@@ -172,11 +172,17 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     # Delete all volumes
     docker volume ls -q | Select-String "pack" | ForEach-Object { docker volume rm $_ }
     ```
+  * Clean image:
+    ```bash
+    docker image prune -a --force
+    ```
+    --> This cleans all the images stored locally. They are saved in Docker Hub by push instruction before.
+    
   * Recheck the storage:
     ```bash
     docker system df
     ```
-    --> This should show that the storage for `Local volume` is `0`
+    --> This should show that the storage for `Local volume` and `Images` are `0`
 
 * Free storage: the file `docker_data.vhdx` is bigger through the time because of the automatically downloaded images and packages. Although the above step cleans the volume of docker, the file `docker_data.vhdx` can not be automatically shorten. So that we have to shorten it manually:
   * Open terminal and run:
@@ -214,5 +220,6 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
