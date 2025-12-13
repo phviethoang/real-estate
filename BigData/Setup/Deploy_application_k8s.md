@@ -185,6 +185,12 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     --> This should show that the storage for `Local volume` and `Images` are `0`
 
 * Free storage: the file `docker_data.vhdx` is bigger through the time because of the automatically downloaded images and packages. Although the above step cleans the volume of docker, the file `docker_data.vhdx` can not be automatically shorten. So that we have to shorten it manually:
+  * Turn off `Docker Desktop`:
+    * In application Docker Desktop, at the bottom left corner, there is an icon of whale and the status `Engine Running`<br>
+      --> Click in icon of 3 dots
+      --> A selection list is shown
+      --> Select `Quit Docker Desktop`
+      --> Wait for a few minutes till the Docker Desktop ends
   * Open terminal and run:
     ```bash
     wsl --shutdown
@@ -220,6 +226,7 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
 
