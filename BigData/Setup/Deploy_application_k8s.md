@@ -156,14 +156,14 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
 
 Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\disk\docker_data.vhdx`. When building image, there are many packages downloaded and saved automatically, making the storage of docker larger, that means the file `docker_data.vhdx` will increase through the time. This may give bad effect on the performance of the local computer because the virtual memory of computer are soon used up. So, the storage need to be cleaned:
 
-* Clean docker image:
+* Clean docker image, volume and cache:
   * Check the storage:
     ```bash
     docker system df
     ```
     ---> This shows a table indicating clearly the volume used for each part
     
-  * Clean image:
+  * Clean volumes:
     ```bash
     docker volume ls
     ```
@@ -177,17 +177,26 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     # Delete all volumes
     docker volume ls -q | Select-String "pack" | ForEach-Object { docker volume rm $_ }
     ```
-  * Clean image:
+  * Clean images:
     ```bash
     docker image prune -a --force
     ```
     --> This cleans all the images stored locally. They are saved in Docker Hub by push instruction before.
+  * Clean cache:
+    ```bash
+    # Clean unused cache
+    docker builder prune
+
+    # Clean all cache
+    docker builder prune --all
+    # --> Then, enter "y" to confirm clean
+    ```
     
   * Recheck the storage:
     ```bash
     docker system df
     ```
-    --> This should show that the storage for `Local volume` and `Images` are `0`
+    --> This should show that the storage for `Local volume`, `Images` and `Builder cache` are `0`
 
 * Free storage: the file `docker_data.vhdx` is bigger through the time because of the automatically downloaded images and packages. Although the above step cleans the volume of docker, the file `docker_data.vhdx` can not be automatically shorten. So that we have to shorten it manually:
   * Turn off `Docker Desktop`:
@@ -231,6 +240,7 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
 
