@@ -1,0 +1,742 @@
+[
+  {
+    "id": "88e2ea15-80e6-4c06-a64c-c86e5ac2bc4d",
+    "question": "Vợ chồng tôi có 2 con nhỏ, muốn tìm căn hộ giá vừa phải tại Gia Lâm",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "1f07e442-14d8-4483-a8d7-b7a44ac38967",
+    "question": "Xu hướng giá biệt thự ở Ứng Hòa năm 2025?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+    {
+    "id": "1da7edb0-8276-422a-849b-5770b07bcb48",
+    "question": "Cho tôi bài đăng nhà phố ở Mê Linh và thông tin dự án Vinhomes Smart City.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "f1470512-808d-4392-9801-fcc7206089b0",
+    "question": "Vợ chồng tôi có 5 con nhỏ, muốn tìm căn hộ giá vừa phải tại Ba Đình",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "ca71b4c5-6ea5-4dd9-bce2-5a94c3270bcc",
+    "question": "Lấy bài đăng chung cư mới nhất ở Ba Đình.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "56708e2c-4eb9-4afb-a1cf-322d4f13d1b4",
+    "question": "Lấy bài đăng biệt thự mới nhất ở Thanh Trì.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "be7e53c4-031f-46c5-bfcc-33affb821ead",
+    "question": "Gia đình tôi có 4 người muốn tìm biệt thự ở quận Bắc Từ Liêm",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "c5f4ba93-1266-4f70-9aba-4417539d696c",
+    "question": "Tìm nhà phố 184m² ở Sơn Tây.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "f99667b3-3348-4c76-a04e-014056fe743b",
+    "question": "Gia đình tôi có 3 người muốn tìm chung cư ở quận Thanh Xuân",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "3ccceb67-e737-4d58-aed8-5c11042f96be",
+    "question": "Tìm chung cư 3 phòng ngủ ở Nam Từ Liêm giá khoảng 1 tỷ.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "745cf206-cc21-434b-a09a-92a376214efc",
+    "question": "Tìm biệt thự 5 phòng ngủ ở Phúc Thọ giá khoảng 56 triệu.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "67c53085-d348-4b4f-8d74-0e79acbde895",
+    "question": "Tìm nhà riêng 177m² ở Long Biên.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    }
+  },
+  {
+    "id": "4fb5b78f-d42e-4d7e-a9ab-a7252395ea6e",
+    "question": "Tình hình dự án Gamuda Gardens thế nào?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "91667d4a-c96f-49e2-803d-ad350465c844",
+    "question": "Tình hình dự án Ecopark thế nào?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "3c83c64a-ab8d-4ab8-b668-ef6debfb6cef",
+    "question": "Dự báo giá nhà phố tại Phúc Thọ trong năm tới.",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "8edb6111-9d16-4716-add6-cf0107cd825f",
+    "question": "Xu hướng giá nhà riêng ở Đông Anh năm 2025?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "d36baa4f-8354-427d-b735-b34661f4da1c",
+    "question": "Dự báo giá chung cư tại Hà Đông trong năm tới.",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "c45bc938-9b1c-4e60-b091-759441b39866",
+    "question": "Dự báo giá biệt thự tại Hà Đông trong năm tới.",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "d0171724-24d1-4a6a-a45c-fb2444c3ee06",
+    "question": "Xu hướng giá nhà phố ở Hà Đông năm 2025?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "1918ad1d-0a5b-4afc-bd1a-e2aff181006b",
+    "question": "Dự báo giá nhà riêng tại Chương Mỹ trong 6 tháng tới.",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "8f125a2b-66f5-4698-829b-4c74f72ae99e",
+    "question": "Xu hướng giá biệt thự ở Gia Lâm năm 2025?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    }
+  },
+  {
+    "id": "7c1d6f9b-7f94-4b18-935d-d22d86e255ed",
+    "question": "Lấy chung cư 4 phòng ngủ ở Gia Lâm và dự báo giá khu vực này.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "4f4d63a2-8c4b-4a23-a119-3ed3a6c7794c",
+    "question": "Cho tôi bài đăng nhà riêng ở Long Biên và thông tin dự án Gamuda Gardens.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "fc47347b-e776-430f-98e6-b81622883863",
+    "question": "Tìm biệt thự 176m² ở Phú Xuyên và xu hướng giá biệt thự ở đó.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "4be44c66-0e79-4d91-9ef4-d1671c7c852c",
+    "question": "Lấy biệt thự 3 phòng ngủ ở Chương Mỹ và dự báo giá khu vực này.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "83fad0ce-4180-42a5-9ed5-9cc2635176aa",
+    "question": "Tìm chung cư 171m² ở Thanh Oai và xu hướng giá chung cư ở đó.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "e585cf97-1f45-4af7-b060-83996f04d07d",
+    "question": "Lấy chung cư 2 phòng ngủ ở Đan Phượng và dự báo giá khu vực này.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "78e36569-9b90-4a26-b741-56d8857bb4dc",
+    "question": "Lấy nhà phố 4 phòng ngủ ở Nam Từ Liêm và dự báo giá khu vực này.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "8a879fa2-148e-40c6-aef3-d8b5963ab795",
+    "question": "Tìm nhà riêng 116m² ở Hà Đông và xu hướng giá nhà riêng ở đó.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "59a0216a-7425-4657-ba1c-2eecfab05a90",
+    "question": "Tìm biệt thự 75m² ở Phúc Thọ và xu hướng giá biệt thự ở đó.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    }
+  },
+  {
+    "id": "c49d3088-80b4-4182-b75d-761e790ab5ad",
+    "question": "Vợ chồng tôi có 2 con nhỏ, muốn tìm căn hộ 2 hoặc 3 phòng ngủ ở Gia Lâm với mức giá phải chăng.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "88e2ea15-80e6-4c06-a64c-c86e5ac2bc4d"
+  },
+  {
+    "id": "f216d41e-7768-40b3-8a22-e097927f4119",
+    "question": "Gia đình tôi có vợ chồng và 5 con nhỏ, nên đang muốn tìm một căn hộ ở Ba Đình. Yêu cầu là căn hộ phải đủ rộng rãi, nhiều phòng ngủ để cả nhà ở thoải mái, với mức giá vừa phải.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "f1470512-808d-4392-9801-fcc7206089b0"
+  },
+  {
+    "id": "938c1aac-ef67-4d30-bb91-402de65ce60b",
+    "question": "Bạn có thể cho mình xem các tin rao bán căn hộ chung cư mới nhất ở Ba Đình được không?",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "ca71b4c5-6ea5-4dd9-bce2-5a94c3270bcc"
+  },
+  {
+    "id": "8fe55201-ec0b-4a5c-a626-e2729495a951",
+    "question": "Cho tôi xem các tin rao biệt thự mới nhất ở Thanh Trì.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "56708e2c-4eb9-4afb-a1cf-322d4f13d1b4"
+  },
+  {
+    "id": "a8bc2109-2b65-40a7-aedc-780782ed5485",
+    "question": "Gia đình tôi có 4 người, đang muốn tìm mua một căn biệt thự ở quận Bắc Từ Liêm.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "be7e53c4-031f-46c5-bfcc-33affb821ead"
+  },
+  {
+    "id": "530457c0-afd9-40bf-ba8f-46181c32262a",
+    "question": "Bạn có căn nhà phố nào ở Sơn Tây, diện tích 184m² không?",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "c5f4ba93-1266-4f70-9aba-4417539d696c"
+  },
+  {
+    "id": "3831e05d-1cbb-49aa-a013-1932c0c07cfc",
+    "question": "Bên mình có căn hộ chung cư nào ở quận Thanh Xuân phù hợp cho gia đình 3 người không ạ?",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "f99667b3-3348-4c76-a04e-014056fe743b"
+  },
+  {
+    "id": "ccbbe34c-4101-4fbc-8914-1e5456a40bea",
+    "question": "Tìm giúp tôi căn chung cư 3 phòng ngủ ở Nam Từ Liêm, giá khoảng 1 tỷ.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "3ccceb67-e737-4d58-aed8-5c11042f96be"
+  },
+  {
+    "id": "ebac861d-1f1a-4ce2-a7a4-c67a7246396b",
+    "question": "Mình muốn tìm biệt thự 5 phòng ngủ ở Phúc Thọ, giá khoảng 56 triệu.",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "745cf206-cc21-434b-a09a-92a376214efc"
+  },
+  {
+    "id": "7bc581d5-7e2c-41da-9da5-0133b98d16a5",
+    "question": "Mình đang cần tìm nhà riêng có diện tích 177 mét vuông ở Long Biên thì có không ạ?",
+    "expected_output": [
+      "search_db"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_db vì câu hỏi yêu cầu tìm bài đăng bất động sản.",
+      "completeness": "Chỉ chọn search_db."
+    },
+    "is_paraphrased": true,
+    "original_id": "67c53085-d348-4b4f-8d74-0e79acbde895"
+  },
+  {
+    "id": "383144f8-0bd0-4d7b-9d49-b36b779a6b68",
+    "question": "Anh/Chị cho em hỏi, giá biệt thự ở Ứng Hòa năm 2025 sẽ có xu hướng như thế nào ạ?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "1f07e442-14d8-4483-a8d7-b7a44ac38967"
+  },
+  {
+    "id": "c8c355db-cecb-4340-918c-2782fa185884",
+    "question": "Dự án Gamuda Gardens hiện tại sao rồi ạ?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "4fb5b78f-d42e-4d7e-a9ab-a7252395ea6e"
+  },
+  {
+    "id": "b12dc8ee-5ed7-42ae-b248-a4dae02432b2",
+    "question": "Anh/chị ơi, cho em hỏi tình hình các loại hình bất động sản tại dự án Ecopark hiện tại thế nào rồi ạ? Hiện tại còn căn hộ, biệt thự hay nhà phố nào đang mở bán không? Em muốn tham khảo về giá, diện tích và số phòng ngủ cụ thể của các sản phẩm ạ.",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "91667d4a-c96f-49e2-803d-ad350465c844"
+  },
+  {
+    "id": "57403e33-becb-4203-ba05-829c335fce76",
+    "question": "Cho tôi hỏi dự báo giá nhà phố ở Phúc Thọ trong năm tới sẽ như thế nào?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "3c83c64a-ab8d-4ab8-b668-ef6debfb6cef"
+  },
+  {
+    "id": "143784be-311c-483d-a108-6359e0d96f93",
+    "question": "Xu hướng giá nhà riêng ở Đông Anh vào năm 2025 dự kiến sẽ biến động thế nào?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "8edb6111-9d16-4716-add6-cf0107cd825f"
+  },
+  {
+    "id": "08b94f23-e763-4f93-a5d0-f251840908f7",
+    "question": "Tình hình giá chung cư tại Hà Đông trong năm tới sẽ diễn biến ra sao?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "d36baa4f-8354-427d-b735-b34661f4da1c"
+  },
+  {
+    "id": "bc1d47f7-d15b-4e49-a53a-077030abbea5",
+    "question": "Giá biệt thự ở Hà Đông năm tới dự kiến sẽ biến động ra sao?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "c45bc938-9b1c-4e60-b091-759441b39866"
+  },
+  {
+    "id": "a24e1d2a-9467-4b77-b82d-b45dc5a08b8f",
+    "question": "Giá nhà phố ở Hà Đông năm 2025 dự kiến sẽ diễn biến ra sao?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "d0171724-24d1-4a6a-a45c-fb2444c3ee06"
+  },
+  {
+    "id": "605c2ad2-30ed-49ed-94fc-d7a16548a469",
+    "question": "Giá nhà riêng ở Chương Mỹ trong vòng 6 tháng tới sẽ biến động ra sao?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "1918ad1d-0a5b-4afc-bd1a-e2aff181006b"
+  },
+  {
+    "id": "4765dac9-2e50-4e2f-8199-ebc778df2df4",
+    "question": "Xu hướng giá biệt thự ở Gia Lâm năm 2025 sẽ ra sao?",
+    "expected_output": [
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn search_web vì câu hỏi yêu cầu thông tin thị trường hoặc dự án.",
+      "completeness": "Chỉ chọn search_web."
+    },
+    "is_paraphrased": true,
+    "original_id": "8f125a2b-66f5-4698-829b-4c74f72ae99e"
+  },
+  {
+    "id": "f791cc94-7a41-4fd5-a823-41d21544f50b",
+    "question": "Tìm giúp tôi thông tin về chung cư 4 phòng ngủ ở Gia Lâm và dự báo giá thị trường khu vực này luôn nhé.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "7c1d6f9b-7f94-4b18-935d-d22d86e255ed"
+  },
+  {
+    "id": "59e67ffd-0651-463f-b3be-0ac02c7db285",
+    "question": "Tìm giúp tôi các tin rao nhà riêng ở Long Biên và thông tin về dự án Gamuda Gardens nhé.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "4f4d63a2-8c4b-4a23-a119-3ed3a6c7794c"
+  },
+  {
+    "id": "ce98846e-a767-415a-908d-da9640e4031b",
+    "question": "Mình đang tìm biệt thự diện tích 176m² ở Phú Xuyên. Bạn có thể cho mình biết thêm về xu hướng giá biệt thự ở khu vực đó dạo này không?",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "fc47347b-e776-430f-98e6-b81622883863"
+  },
+  {
+    "id": "a5974998-38ac-49fa-b36c-c5ed5e127a0f",
+    "question": "Tìm giúp tôi biệt thự 3 phòng ngủ ở Chương Mỹ. Đồng thời, đánh giá giúp tôi về giá nhà đất khu vực này nhé.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "4be44c66-0e79-4d91-9ef4-d1671c7c852c"
+  },
+  {
+    "id": "8f7fb610-dace-4c00-8770-83116ea5ff0c",
+    "question": "Bạn tìm giúp tôi căn hộ chung cư nào diện tích tầm 171m² ở Thanh Oai. Tiện thể, cho tôi hỏi luôn xu hướng giá chung cư ở khu vực đó đang như thế nào ạ?",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "83fad0ce-4180-42a5-9ed5-9cc2635176aa"
+  },
+  {
+    "id": "8105898d-c947-4429-a740-51d88ba95e94",
+    "question": "Mình đang tìm một căn chung cư 2 phòng ngủ ở Đan Phượng. Bạn có thể cho mình biết dự báo giá khu vực này luôn được không?",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "e585cf97-1f45-4af7-b060-83996f04d07d"
+  },
+  {
+    "id": "a3f96634-b51c-4ef6-a392-fa260294d051",
+    "question": "Bạn tìm giúp tôi nhà phố 4 phòng ngủ ở Nam Từ Liêm, và cho tôi xin dự báo giá thị trường khu vực này với.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "78e36569-9b90-4a26-b741-56d8857bb4dc"
+  },
+  {
+    "id": "daa48b8a-716d-4375-aa80-041e2e274f0c",
+    "question": "Mình muốn tìm các tin rao bán nhà phố ở Mê Linh, với lại cho mình xin thông tin về dự án Vinhomes Smart City nhé.",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "1da7edb0-8276-422a-849b-5770b07bcb48"
+  },
+  {
+    "id": "3789c430-e2bc-4562-b022-a3f2b2016893",
+    "question": "Mình đang tìm mua nhà riêng diện tích khoảng 116m² ở Hà Đông. Tiện thể cho mình hỏi luôn là xu hướng giá nhà riêng ở khu vực đó hiện tại thế nào ạ?",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "8a879fa2-148e-40c6-aef3-d8b5963ab795"
+  },
+  {
+    "id": "1eb59494-bba1-44ee-a34f-fc3483463e8c",
+    "question": "Cho em hỏi có biệt thự nào diện tích tầm 75m² ở Phúc Thọ không ạ? Và tiện thể cho em hỏi luôn về xu hướng giá biệt thự ở khu vực này dạo này thế nào rồi ạ?",
+    "expected_output": [
+      "search_db",
+      "search_web"
+    ],
+    "evaluation_criteria": {
+      "accuracy": "Phải chọn cả search_db và search_web vì câu hỏi yêu cầu cả bài đăng và thông tin thị trường.",
+      "completeness": "Cả hai công cụ phải được chọn."
+    },
+    "is_paraphrased": true,
+    "original_id": "59a0216a-7425-4657-ba1c-2eecfab05a90"
+  }
+]
