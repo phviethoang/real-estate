@@ -7,8 +7,8 @@ The pipeline of data is : Producer -> Kafka -> Minio. So, what connects `Kafka` 
 <br>
 
 ###    **Pipeline**
-* **[2] - Code spark**
-* [3] -
+* **[1] - Code spark**
+* **[2] - Deploy application**
 
 <br>
 
@@ -145,4 +145,5 @@ The pipeline of data is : Producer -> Kafka -> Minio. So, what connects `Kafka` 
     kubectl get pod -n kafka
     ```
     --> The result list should include the pod that we have created with the field `STATUS` being `Running` and the field `READY` being `1/1`
+
 
