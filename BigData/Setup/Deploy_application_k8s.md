@@ -140,7 +140,7 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
                       resources:
                         # Maximum resources that the pod can used, pod will be killed if exceed
                         limits:
-                            # RAM
+                            # RAM: Gi, Mi
                             memory: "128Mi"
                             # Core: "1" ~ "1000m": use 1 cpu core( ~ 1000 milicore), "500m": use 0.5 core( ~ 500 milicore)
                             cpu: "500m"
@@ -256,6 +256,7 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
 
