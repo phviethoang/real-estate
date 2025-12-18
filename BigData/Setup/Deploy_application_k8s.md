@@ -101,38 +101,54 @@ This step is to create and run a pod on Kubernete system, this pod run an contai
             namespace: namepace      # example: kafka
             labels:                  # --> label for managing deployment
                 app: kafka-producer-management
+        
+        ####################################################
+        # Configuration of the deployment
+        ####################################################
         spec:
             replicas: 1                            # how many pods that this deployment runs
             selector:                              # define how the deployment find its pods
                 matchLabels:                       # --> this means the deployment will find its pod by find the label matched
-                    app: name_of_pod_need_to_found # example: kafka-producer  
-            template:                     # define struct of a pod
+                    app: name_of_pod_need_to_found # example: kafka-producer
+            #####################################
+            # Define pod deployed in this deployment
+            #####################################
+            template:
+                ##########################
+                # Define pod metadata
+                ##########################
                 metadata:
-                    labels:               # must be the same as the matchlabel
+                    labels:                         
                         app: kafka-producer         # this must match the labels in selector.matchLabels
-                spec:                                          
+                ##########################
+                # Pod configuration
+                ##########################
+                spec:
                     containers:                                                # Define the parameter for container in pod
                     - name: set_name_for_container                             # example: kafka-producer-container
-                      image: image_in_docker_hub_that_encapsulates_applications # example: hdoan043/test-kafka:v1 
+                      image: image_in_docker_hub_that_encapsulates_applications# example: hdoan043/test-kafka:v1 
         
-                      # Đặt Biến Môi trường cho Kafka Broker
-                      # Tên service Bootstrap Server của bạn là: my-cluster-kafka-bootstrap:9092
-                      # (Dựa trên thông tin kết nối trong image_d5410d.png)
-                      env:                                       # Set environment variables 
-                      - name: name_of_environment_variable_1     # example: KAFKA_BROKERS
-                        value: value_of_environment_variable_1   # example: my-cluster-kafka-bootstrap:9092
-                      - name: name_of_environment_variable_2     # example: KAFKA_TOPIC
-                        value: value_of_environmetn_variable_2   # example: my-topic  
+                      
+                      # ----- Define environment variable ------
+                      env:                                                      # Set environment variables 
+                      - name: name_of_environment_variable_1                    # example: KAFKA_BROKERS
+                        value: value_of_environment_variable_1                  # example: my-cluster-kafka-bootstrap:9092
+                      - name: name_of_environment_variable_2                    # example: KAFKA_TOPIC
+                        value: value_of_environmetn_variable_2                  # example: my-topic  
                     
-                      # Nếu producer.py của bạn chạy trong vòng lặp vô hạn, 
-                      # Container luôn chạy (Running)
-                      resources:                                 # Define resource
+                      # ------ Define resource provided for pod ------
+                      resources:
+                        # Maximum resources that the pod can used, pod will be killed if exceed
                         limits:
+                            # RAM
                             memory: "128Mi"
+                            # Core: "1" ~ "1000m": use 1 cpu core( ~ 1000 milicore), "500m": use 0.5 core( ~ 500 milicore)
                             cpu: "500m"
+                        # Minimum resources the pod requires for running
                         requests:
                             memory: "64Mi"
                             cpu: "250m"
+        
                        # If pod is crashed immediately and AI instructs to run "kubectl exec -it ..." for debugging,
                        # Add these 2 configurations for keep pod running so that we can run "kubectl exec -it..."
                        # Then, when finishing debuging, delete these 2 instructions
@@ -240,6 +256,7 @@ Docker manages all of its data in file `C:\Users\Admin\AppData\Local\Docker\wsl\
     exit
     ```
 * Recheck the storage: open `File Explorer` --> the volume `C:\\` should contain more free storage
+
 
 
 
