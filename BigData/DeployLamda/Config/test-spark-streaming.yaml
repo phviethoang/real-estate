@@ -20,11 +20,11 @@ spec:
         image: hieudv774/spark:1.0.0
         env:
         - name: KAFKA_BOOTSTRAP_SERVER
-          value: "http://my-cluster-kafka-bootstrap:9092"
+          value: "my-cluster-kafka-bootstrap:9092"                      # No "http://"
         - name: KAFKA_TOPIC
           value: "my-topic"
         - name: MINIO_HOST
-          value: "http://minio-service.minio.svc.cluster.local:9000"
+          value: "http://minio-service.minio.svc.cluster.local:9000"    # Must contain "http://"
         - name: MINIO_USER
           value: "bigdata123"
         - name: MINIO_PASSWORD
