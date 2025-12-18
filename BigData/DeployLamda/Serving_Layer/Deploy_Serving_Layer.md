@@ -279,8 +279,9 @@ View file `SparkToES.md`
     ```
 
 * Check the data is sent successfully:
-    * Access the link http://<PUBLIC_IP_OF_INSTANCE>:<PUBLIC_PORT_OF_ELASTIC_SEARCH>/<NAME_OF_INDEX>/_search
+    * Access the link `http://<PUBLIC_IP_OF_INSTANCE>:<PUBLIC_PORT_OF_ELASTIC_SEARCH>/<NAME_OF_INDEX>/_search`
     * Input username and password if required
     * The data shoule be shown, that means spark has sent successfully and the Elastic Search can receive data
+
 
 
