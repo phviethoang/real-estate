@@ -1,133 +1,148 @@
 # **STORE DATA INTO MINIO**
 <br><br>
 
-The pipeline of data is : Producer -> Kafka -> Minio. So, what connects `Kafka` and `Minio` to store data? There are several ways but here `Kafka Connection` will be used.
+The pipeline of data is : Producer -> Kafka -> Minio. So, what connects `Kafka` and `Minio` to store data? There are several ways but here `Spark streaming` will be used.
 
-`Kafka Connection` is created to support `Kafka`: it plays role of deliver to transport data from `Kafka`- which is just a queue, not able to forward data - to `MinIO`.
-
+`Spark Streaming` will be deployed similarly as the one transporting data from Kafka to Elastic Search
 <br>
 
 ###    **Pipeline**
-* **[1] - Install plugin S3**
-* **[2] - Deploy Infrastructure for kafka connection**
+* **[2] - Code spark**
 * [3] -
 
 <br>
 
-## **===1| Install plugin S3**
+## **===1| Code Spark**
 
-`Kafka Connection` requires plugin `S3` to work. However, Operator of Kafka - Strimzi Operator- is not equiped with `S3` by default, so plugin `S3` must be installed manually. The idea is that `S3` will be included in a container, that means we have to build an image encapsulate `S3` and push it to Docker Hub
+### ***Code Spark***
 
-* Create a file `Dockerfile` with no extension and config:
+* Import:
+    ```python
+    from pyspark.sql.functions import from_json, col
+    from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+    ```
+* Get information:
+    ```python
+    KAFKA_BOOTSTRAP = 
+    KAFKA_TOPIC = 
+    MINIO_SERVICE = 
+    MINIO_USERNAME = 
+    MINIO_PASSWORD =
+    BUCKET_NAME =  
+    DRIVER_MEMORY = 
+    ```
+* Open a spark session:
+    ```python
+    spark = SparkSession.builder \
+                .appName("SparkStreaming")\
+                .config("spark.driver.extraJavaOptions", "-Djava.security.properties=")\
+                .config("spark.executor.extraJavaOptions", "-Djava.security.properties=")\
+                .config("spark.driver.memory", DRIVER_MEMORY)\
+                \
+                .config("spark.hadoop.fs.s3a.endpoint", MINIO_SERVICE) \
+                .config("spark.hadoop.fs.s3a.access.key", MINIO_USERNAME) \
+                .config("spark.hadoop.fs.s3a.secret.key", MINIO_PASSWORD) \
+                .config("spark.hadoop.fs.s3a.path.style.access", "true") \
+                .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+                .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
+                .getOrCreate()
+    ```
+* Read data from Kafka:
+    ```python
+    df_kafka = spark.readStream \
+        .format("kafka") \
+        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP) \
+        .option("subscribe", KAFKA_TOPIC) \
+        .option("startingOffsets", "earliest") \
+        .load()
+    ```
+* Parse data:
+    ```python
+    # Basic parse: parse string to string
+    df_processed = df_kafka.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+
+    # (Tùy chọn) Nếu dữ liệu là JSON, bạn có thể parse struct tại đây
+    # Create schema
+    schema = StructType([StructField("name", StringType()), StructField("age", IntegerType())])
+    # Parse to schema
+    df_parsed = df_processed.select(from_json(col("value"), schema).alias("data")).select("data.*")
+    ```
+
+* Save to MinIO:
+    ```python
+    query = df_processed.writeStream \
+        .format("parquet") \
+        .option("path", "s3a://{}/kafka-data/".format(BUCKET_NAME)) \
+        .option("checkpointLocation", "s3a://{}/checkpoints/".format(BUCKET_NAME)) \
+        .outputMode("append") \
+        .start()
+    ```
+* Close minio:
+    ```python
+    query.awaitTermination()
+    ```
+
+### ***Encapsulate***
+
+* Dockerfile:
     ```Dockerfile
-    # Giai đoạn 1: Giữ nguyên
-    FROM confluentinc/cp-kafka-connect:7.5.0 AS builder
-    RUN confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.5.0 \
-        --component-dir /usr/share/confluent-hub-components
+    # Base Image có sẵn Python và các công cụ cơ bản
+    FROM python:3.10-slim-bullseye
 
-    # --- Giai đoạn 2: SỬA DÒNG NÀY ---
-    # Dùng bản 3.7.1 chắc chắn tồn tại
-    FROM quay.io/strimzi/kafka:0.48.0-kafka-4.0.0 
-    USER root:root
+    # 1. CÀI ĐẶT JAVA( OpenJDK 17) VÀ CÁC CÔNG CỤ CƠ BẢN
+    RUN apt-get update && \
+        apt-get install -y openjdk-17-jre-headless procps curl && \
+        rm -rf /var/lib/apt/lists/*
 
-    # Copy plugin (Giữ nguyên)
-    RUN mkdir -p /opt/kafka/plugins/s3-sink
-    COPY --from=builder /usr/share/confluent-hub-components/confluentinc-kafka-connect-s3 /opt/kafka/plugins/s3-sink
+    # 2. THIẾT LẬP BIẾN MÔI TRƯỜNG CHO JAVA (FIX LỖI JAVA_HOME)
+    # /usr/lib/jvm/java-17-openjdk-amd64 là đường dẫn chuẩn sau khi apt-get install
+    ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    ENV PATH=$JAVA_HOME/bin:$PATH
 
-    USER 1001
+    # 3. CÀI ĐẶT CÁC THƯ VIỆN PYTHON (PYSPARK)
+    # Thiết lập thư mục làm việc trong Container
+    WORKDIR /app
+
+    # Copy file requirements.txt vào thư mục làm việc
+    COPY requirements.txt .
+
+    # Cài đặt thư viện (Bao gồm pyspark)
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    RUN curl -fL -o /usr/local/lib/python3.10/site-packages/pyspark/jars/spark-sql-kafka-0-10_2.12-3.4.1.jar https://repo1.maven.org/maven2/org/apache/spark/spark-sql-kafka-0-10_2.12/3.4.1/spark-sql-kafka-0-10_2.12-3.4.1.jar && \
+        curl -fL -o /usr/local/lib/python3.10/site-packages/pyspark/jars/spark-token-provider-kafka-0-10_2.12-3.4.1.jar https://repo1.maven.org/maven2/org/apache/spark/spark-token-provider-kafka-0-10_2.12/3.4.1/spark-token-provider-kafka-0-10_2.12-3.4.1.jar && \
+        curl -fL -o /usr/local/lib/python3.10/site-packages/pyspark/jars/kafka-clients-3.3.2.jar https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.2/kafka-clients-3.3.2.jar && \
+        curl -fL -o /usr/local/lib/python3.10/site-packages/pyspark/jars/commons-pool2-2.11.1.jar https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.11.1/commons-pool2-2.11.1.jar && \
+        # ElasticSearch giữ nguyên (tương thích tốt với Spark 3.4)
+        curl -fL -o /usr/local/lib/python3.10/site-packages/pyspark/jars/elasticsearch-spark-30_2.12-8.13.4.jar https://repo1.maven.org/maven2/org/elasticsearch/elasticsearch-spark-30_2.12/8.13.4/elasticsearch-spark-30_2.12-8.13.4.jar
+
+    # 4. COPY CODE
+    # Copy các file code của bạn vào Container
+    COPY main.py .
+    # (Nếu có các file code khác như config.py, hãy thêm vào đây)
+
+    # 5. LỆNH CHẠY (ENTRYPOINT)
+    # Lệnh này sẽ được thực thi khi Container khởi động
+    CMD ["python3", "main.py"]
     ```
-* Build by:
-    ```shell
-    docker build -t <username_of_docker>/<name_of_image>:<tag: v1,v1,...> <path_to_folder_containing_dockerfile>
-    ```
-* Push into Docker Hub
-    ```shell
-    docker push <username_of_docker>/<name_of_image>:<tag: v1,v1,...>
-    ```
+* Build and push to Docker Hub with name: `username/image_name:tag_name`
 
-## **===2| Deploy infrastructure for Kafka Connection**
-
-Operator of Kafka - Strimzi Operator - needs to know some information to create Kafka Connection. 
+## **===2| Deploy in Kubernete**
 
 * Create a `yaml` file:
     ```bash
-    sudo nano kafka-connection-config.yaml
+    sudo nano spark-to-minio.yaml
     ```
 * Config:
-    ```yaml
-    apiVersion: kafka.strimzi.io/v1beta2
-    kind: KafkaConnect
-    metadata:
-        name: my-connect-cluster                        # name of kafka-connection pod
-        namespace: kafka
-        annotations:
-            strimzi.io/use-connector-resources: "true"
-    spec:
-        version: 4.0.0
-        replicas: 1
-        image: <username_of_docker>/<image_name>:<tag> # the image encapsulating S3
-        bootstrapServers: name_of_kafka_service:port   # this is the service and port provided by kafka, kafka connection can know where to get data from
-        readinessProbe:
-            initialDelaySeconds: 60
-            timeoutSeconds: 10
-        livenessProbe:
-            initialDelaySeconds: 60
-            timeoutSeconds: 10
-        config:
-            key.converter: org.apache.kafka.connect.json.JsonConverter
-            value.converter: org.apache.kafka.connect.json.JsonConverter
-            key.converter.schemas.enable: false
-            value.converter.schemas.enable: false
-            group.id: connect-cluster
-    ```
+    View `Config/test-spark-streaming.yaml`
 * Save file by `CTRL + S` and `CTRL + X` to quit
 * Apply configuration:
     ```bash
-    kubectl apply -f kafka-connection-config.yaml
+    kubectl apply -f spark-to-minio.yaml
     ```
 * Confirm by:
     ```bash
     kubectl get pod -n kafka
     ```
     --> The result list should include the pod that we have created with the field `STATUS` being `Running` and the field `READY` being `1/1`
-
-## **===3| Deploy job**
-This is to allow the data can flow automatically from source ( Kafka) to destination( MinIO)
-
-* Create a `yaml` file:
-    ```bash
-    sudo nano kafka-connection.yaml
-    ```
-* Config:
-    ```yaml
-    apiVersion: kafka.strimzi.io/v1beta2
-    kind: KafkaConnector
-    metadata:
-        name: kafka-connection
-        namespace: kafka
-        labels:
-            strimzi.io/cluster: my-connect-cluster # This must be the same as the name of KafkaConnection pod in step 2
-    spec:
-        class: io.confluent.connect.s3.S3SinkConnector
-        tasksMax: 1
-        config:
-            topics: my-topic             # source topic that data comes from
-            s3.bucket.name: data-lake   # the name of destination bucket in MinIO that the data reaches to
-            store.url: http://<name_of_minio_service>:<internal_port> 
-            # <name_of_minio_service> is the name of service that we have created and provided for MinIO pod, 
-            # <internal_port> is the port that is defined in service and used for communicating with other pod
-            storage.class: io.confluent.connect.s3.storage.S3Storage
-            format.class: io.confluent.connect.s3.format.json.JsonFormat
-            aws.access.key.id: <username_of_minio>
-            aws.secret.access.key: <password_of_minio>
-    ```
-* Save file by `CTRL + S` and quit by `CTRL + X`
-* Apply configuration:
-    ```bash
-    kubectl apply -f kafka-connection.yaml -n kafka
-    ```
-
-
-
-
 
