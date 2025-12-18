@@ -24,7 +24,7 @@ spec:
         - name: KAFKA_TOPIC
           value: "my-topic"
         - name: MINIO_HOST
-          value: ""
+          value: "http://minio-service.minio.svc.cluster.local:9000"
         - name: MINIO_USER
           value: "bigdata123"
         - name: MINIO_PASSWORD
