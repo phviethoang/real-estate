@@ -20,7 +20,7 @@ spec:
         image: hieudv774/spark:1.0.0
         env:
         - name: KAFKA_BOOTSTRAP_SERVER
-          value: "my-cluster-kafka-bootstrap:9092"
+          value: "http://my-cluster-kafka-bootstrap:9092"
         - name: KAFKA_TOPIC
           value: "my-topic"
         - name: MINIO_HOST
