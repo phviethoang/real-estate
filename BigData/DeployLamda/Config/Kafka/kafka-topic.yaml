@@ -1,0 +1,55 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: nhapho
+  namespace: kafka # Nhớ sửa đúng namespace chứa cụm Kafka của bạn
+  labels:
+    strimzi.io/cluster: my-cluster # Tên cụm Kafka cluster của bạn
+spec:
+  partitions: 2  # Chia 3 phân vùng để Spark đọc song song cho nhanh
+  replicas: 1    # Để 1 nếu cluster nhỏ (hoặc 3 nếu cluster chuẩn production)
+  config:
+    retention.ms: 604800000 # Lưu trữ 7 ngày (7 * 24 * 3600 * 1000)
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: chungcu
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 2
+  replicas: 1
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: bietthu
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 2
+  replicas: 1
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: nharieng
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 2
+  replicas: 1
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
