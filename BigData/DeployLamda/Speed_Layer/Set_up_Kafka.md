@@ -137,6 +137,9 @@ Create topics for data stream:
     spec:
         partitions: 6  # number of partitions
         replicas: 3    # number of replicates( should be equal to the number of brokers)
+        config:
+            retention.ms: 604800000            # Store data in 604800000 ms ~ 7 days, after that, data will be deleted
+            segment.bytes: 1073741824
     ```
 
 * Apply the configuration:
@@ -211,6 +214,7 @@ Enter command `exit` to exit from the bash of client pod
   kubectl delete pod strimzi-cluster-operator-xxxxxx -n <namespace>
   # --> Delete operator pod --> This will reconstruct a new operator pod and reset cache
   ```
+
 
 
 
