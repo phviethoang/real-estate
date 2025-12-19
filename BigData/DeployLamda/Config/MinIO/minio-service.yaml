@@ -1,0 +1,16 @@
+apiVersion: v1
+    kind: Service
+    metadata:
+        name: minio-service
+        namespace: minio
+    spec:
+        selector:
+            app: minio # This must refer to the name of the pod MinIO: name of the pod MinIO is the value in "spec.template.metadata.labels.app"
+        ports:
+        -   name: api
+            port: 9000
+            targetPort: 9000
+        -   name: console
+            port: 9001
+            targetPort: 9001
+        type: ClusterIP
