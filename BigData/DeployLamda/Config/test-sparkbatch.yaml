@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-spark-batch
+  namespace: application
+  labels:
+    app: test-spark-batch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-spark-batch
+  template:
+    metadata:
+      labels:
+        app: test-spark-batch
+    spec:
+      containers:
+      - name: test-batch
+        image: hdoan043/test-sparkbatch:v1
+        env:
+        - name: MINIO_HOST
+          value: "http://minio-service.minio.svc.cluster.local:9000"    # Must contain "http://"
+        - name: MINIO_USER
+          value: "bigdata123"
+        - name: MINIO_PASSWORD
+          value: "bigdata123"
+        - name: MINIO_BUCKET
+          value: "testbucket"
+        - name: ES_HOST
+          value: ""
+        - name: ES_PORT
+          value: "9200"
+        - name: ES_USER
+          value: "elastic"
+        - name: ES_PASS
+          value: "83zobLJ9694Ww5qq982qcJYt"
+        - name: ES_INDEX
+          value: "test_minio_index"
+        - name: SPARK_DRIVER_MEMORY
+          value: "2g"
+        resources:
+          limits:
+            memory: "3Gi"
+            cpu: "800m"
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
