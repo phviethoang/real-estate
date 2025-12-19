@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  namespace: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      -  name: minio-container
+         image: minio/minio:latest
+         args:
+         - server
+         - /data
+         - --console-address
+         - :9001
+         env:
+         -  name: MINIO_ROOT_USER
+            value: "bigdata123"
+         -  name: MINIO_ROOT_PASSWORD
+            value: "bigdata123"
+         ports:
+         -  containerPort: 9000
+         -  containerPort: 9001
+         volumeMounts:
+         -  name: data
+            mountPath: /data
+      volumes:
+      -  name: data
+         emptyDir: {}
+          
