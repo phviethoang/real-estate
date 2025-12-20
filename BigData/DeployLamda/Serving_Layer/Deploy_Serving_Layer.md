@@ -283,5 +283,19 @@ View file `SparkToES.md`
     * Input username and password if required
     * The data shoule be shown, that means spark has sent successfully and the Elastic Search can receive data
 
+## **===8| [BONUS] Delete index in Elastic Search**
+
+* Get cluster ip of ES service:
+  ```bash
+  kubectl get svc -n e <namespace>
+  ```
+  --> The result is a table with columns `NAME`, `TYPE`, `CLUSTER-IP`, `EXTERNAL-IP`, `PORT(S)`, `AGE`.Find the service of Elastic Search which has its `NAME` being `esname-http`. And remember its corresponding `CLUSTER-IP` and its `PORT`.
+
+* Delete index:
+  ```bash
+  curl -X DELETE -u <es-username>:<es-password> http://<es-cluster-ip>:<es-port>/<index_name>
+  ```
+  ---> If success, the result will show `{"acknowledged":true}`
+  
 
 
