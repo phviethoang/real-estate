@@ -10,6 +10,15 @@ The tool for scheduling used here is `Airflow`.
 
 ## **===1| Install Airflow**
 
+* Airflow must be run in Linux, so activate ubuntu and set username and password(if required). Then: install `python` and neccessary libraries:
+  ```bash
+  # 1. Cập nhật hệ thống
+  sudo apt update && sudo apt upgrade -y
+  
+  # 2. Cài pip và venv
+  sudo apt install python3-pip python3-venv -y
+  ```
+  
 * Create virtual environment
   ```bash
   # Create virtual environment airflow
@@ -21,27 +30,15 @@ The tool for scheduling used here is `Airflow`.
 
 * Install Airflow
   ```bash
-  pip install "apache-airflow[cncf.kubernetes]" pandas requests
+  pip install "apache-airflow[cncf.kubernetes]" pandas requests apache-airflow-providers-fab
   ```
 
 * Init :
   ```bash
   export AIRFLOW_HOME=~/airflow
-  airflow db init
-  airflow users create --username <set_username> ` # Any, unimportant, but should be easy to remember
-    --firstname <set_firstname>`                   # Any, unimportant
-    --lastname <set_lastname>`                     # Any, unimportant
-    --role <set_role:Admin>                        # Must be Admin to have right to controll Airflow
-    --email <set_email>                            # Any, unimportant
-    --password <set_password>                      # Any, unimportant, but should be easy to remember
+  airflow db migrate
   ```
 
-* Run airflow:
-  ```bash
-  airflow schedule
-  airflow webserver -p <port: 8080> # This will allow to access an interface of Airflow in port 8080,
-                                    # with this interface, we can run DAG that airflow manages
-  ```
 ## **===2| Prepare for controlling**
 
 To let `Airflow` can control k8s and run batch processing job, it must be provided with permission. To get permission in k8s system:
@@ -54,7 +51,7 @@ To let `Airflow` run batch processing job, the job must be built to be a Docker 
 
 ## **===3| Logic of scheduling**
 
-In this step, we will determine which is run first, which is run later, how often they are run,.... Create a python file and code:
+In this step, we will determine which is run first, which is run later, how often they are run,.... Create a python file (`.py`) IN PATH `~/airflow/dags/`( must be in the right path) and code:
 * Import:
   ```python
   from airflow import DAG
@@ -127,11 +124,19 @@ In this step, we will determine which is run first, which is run later, how ofte
         get_logs=True,
         is_delete_operator_pod=True # Chạy xong tự xóa Pod để tiết kiệm RAM cho cluster
       )
-      run_crawler >> run_spark_batch
+      # run task `run_crawler` first, after it done, run task `run_spark_batch` next
+      run_crawler >> run_spark_batch 
     ```
 ## **===4| Check and run**
 
-* Access `localhost:8080` --> access the Airflow interface
+This test will be used to check the flow, but not affect the scheduled time.
+* Run:
+  ```bash
+  airflow standalone
+  ```
+  --> an Airflow application will be automatically run in `localhost:8080`
+  the logs are printed, they include the username and password for sign in application
+* Access `localhost:8080` --> access the Airflow interface, sign in with the provided username and password
 * Find the DAG with the name `<name_of_dag>`
 * Click `ON`
 * Click `TriggerDAG`
