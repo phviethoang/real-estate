@@ -46,7 +46,7 @@ The tool for scheduling used here is `Airflow`.
 
 To let `Airflow` can control k8s and run batch processing job, it must be provided with permission. To get permission in k8s system:
 * In master node, open file `/etc/kubernetes/admin.conf`, and copy its content
-* Create a file `config` in local and paste the content
+* Create a file `config`( or `config.yaml` or `config.conf`,.... no matter what the extension is) in local and paste the content
 * Find the line :`server: http://192.168.x.x:6443` --> change to `server: http://<public_ip_of_ec2>:6443`
 * Save file
 
