@@ -44,7 +44,7 @@ The tool for scheduling used here is `Airflow`.
 To let `Airflow` can control k8s and run batch processing job, it must be provided with permission. To get permission in k8s system:
 * In master node, open file `/etc/kubernetes/admin.conf`, and copy its content
 * Create a file `config`( or `config.yaml` or `config.conf`,.... no matter what the extension is) in local and paste the content
-* Find the line :`server: http://192.168.x.x:6443` --> change to `server: http://<public_ip_of_ec2>:6443`
+* Find the line :`server: http://192.168.x.x:6443` --> change to `server: http://<public_ip_of_master_node>:6443`
 * Save file
 
 To let `Airflow` run batch processing job, the job must be built to be a Docker image. The main idea is that `Airflow` accesses to k8s and periodly create new batch processing job with the image built, but not rerun the current pod
@@ -137,9 +137,23 @@ This test will be used to check the flow, but not affect the scheduled time.
   --> an Airflow application will be automatically run in `localhost:8080`
   the logs are printed, they include the username and password for sign in application
 * Access `localhost:8080` --> access the Airflow interface, sign in with the provided username and password
-* Find the DAG with the name `<name_of_dag>`
+* In the left column, find the section `Dags`, click it and find the our dag with the name `<name_of_dag>`
 * Click `ON`
-* Click `TriggerDAG`
-* Monitor: click task `trigger_<task_name>` --> `Logs`
-  --> If log of the code batch processing job is shown, the batch processing job is run successfully.
+* Click `TriggerDAG` ( the triangle button)
+  --> a box will appear, with name `"Déclencher un Dag"` (Trigger DAG)
+  --> select `Exécution unique` ( Single execution)
+  --> click `"Déclencher"` in the right corner( Trigger )
+  --> The page will be reloaded
+* After reloading page, click into DAG name
+  --> a page of detail information of dag is shown
+  --> in the left column, there are task that we have set( here we set 2 trigger: 'run_local_crawler', and 'trigger_remote_spark_batch')
+      If the task is run successfully, the square beside the task name will be green
+      if fail, the square is red. Click to square to view logs.
+* Rerun the error task by click the red square beside the task name to view logs
+  --> In the same window shown, click `Réinitialiser Instance de tâche` to clear the task
+  --> Click `Réinitialiser` to confirm
+  --> The red square will change to color blue, that means the task is rerunning
+* To kill task: click `Marquer comme échoué` to kill, and confirm( the red button)
+  --> Then, turn off the DAG
+* Stop Airflow by `CTRL + C`
 
