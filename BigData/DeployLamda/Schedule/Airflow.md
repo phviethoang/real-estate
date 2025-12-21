@@ -30,7 +30,7 @@ The tool for scheduling used here is `Airflow`.
 
 * Install Airflow
   ```bash
-  pip install "apache-airflow[cncf.kubernetes]" pandas requests apache-airflow-providers-fab
+  pip install "apache-airflow[cncf.kubernetes]" pandas requests apache-airflow-providers-fab apache-airflow-providers-cncf-kubernetes
   ```
 
 * Init :
