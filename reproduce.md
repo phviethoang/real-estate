@@ -20,5 +20,5 @@ See [Setup_Kubernete](/real-estate/docs/Setup_Kubernete/Setup_Kubernete.md)
 * Deploy Streaming Layer: See [Speed_Layer](/real-estate/docs/DeployLamda/Speed_Layer)
 * Deploy Batch Layer: See [Batch_Layer](/real-estate/docs/DeployLamda/Batch_Layer)
 * Deploy Serving Layer: See [Serving_Layer](/real-estate/docs/DeployLamda/Serving_Layer)
-* For scheduling: See [Scheduling]/real-estate/docs/DeployLamda/Schedule
+* For scheduling: See [Scheduling](/real-estate/docs/DeployLamda/Schedule)
 
