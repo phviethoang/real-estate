@@ -13,7 +13,7 @@ To reproduce the project, follow these step:
 
 ## **===2| Set up Kubernete system**
 
-See [Setup_Kubernete][(https://github.com/phviethoang/real-estate/blob/main/docs/Setup_Kubenete/Setup_Kubernete.md)
+See [Setup_Kubernete](https://github.com/phviethoang/real-estate/blob/main/docs/Setup_Kubenete/Setup_Kubernete.md)
 
 ## **===3| Deploy Lambda system**
 
