@@ -13,12 +13,12 @@ To reproduce the project, follow these step:
 
 ## **===2| Set up Kubernete system**
 
-See [Setup_Kubernete](/real-estate/docs/Setup_Kubernete/Setup_Kubernete.md)
+See [Setup_Kubernete][(https://github.com/phviethoang/real-estate/blob/main/docs/Setup_Kubenete/Setup_Kubernete.md)
 
 ## **===3| Deploy Lambda system**
 
-* Deploy Streaming Layer: See [Speed_Layer](/real-estate/docs/DeployLamda/Speed_Layer)
-* Deploy Batch Layer: See [Batch_Layer](/real-estate/docs/DeployLamda/Batch_Layer)
-* Deploy Serving Layer: See [Serving_Layer](/real-estate/docs/DeployLamda/Serving_Layer)
-* For scheduling: See [Scheduling](/real-estate/docs/DeployLamda/Schedule)
+* Deploy Streaming Layer: See [Speed_Layer](https://github.com/phviethoang/real-estate/tree/main/docs/DeployLamda/Speed_Layer)
+* Deploy Batch Layer: See [Batch_Layer](https://github.com/phviethoang/real-estate/tree/main/docs/DeployLamda/Batch_Layer)
+* Deploy Serving Layer: See [Serving_Layer](https://github.com/phviethoang/real-estate/tree/main/docs/DeployLamda/Serving_Layer)
+* For scheduling: See [Scheduling](https://github.com/phviethoang/real-estate/tree/main/docs/DeployLamda/Schedule)
 
