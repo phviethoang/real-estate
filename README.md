@@ -1,5 +1,9 @@
-# real-estate
+# **[Project BigData]Group 26 - Hệ thống thu thập, lưu trữ, xử lý dữ liệu bất động sản**
 
-BTL của nhóm 26 môn IT4931 - Bigdata - HUST
+### **General**
 
-Đề tài: Xây dựng Hệ thống thu thập, lưu trữ, phân tích, xử lý dữ liệu bất động sản
+Our subject is to deploy a system of *Hệ thống thu thập, lưu trữ, xử lý dữ liệu bất động sản*. This is our official branch of project. The branch contains scripts and configuration files for Kubernete system.
+
+### **About our repository**
+
+
