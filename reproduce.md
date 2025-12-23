@@ -13,11 +13,12 @@ To reproduce the project, follow these step:
 
 ## **===2| Set up Kubernete system**
 
-See /real-estate/Reproduce/Setup_Kubernete/Setup_Kubernete.md
+See [Setup_Kubernete](/real-estate/docs/Setup_Kubernete/Setup_Kubernete.md)
 
 ## **===3| Deploy Lambda system**
 
-* Deploy Streaming Layer: See /real-estate/Reproduce/DeployLamda/Speed_Layer
-* Deploy Batch Layer: See /real-estate/Reproduce/DeployLamda/Batch_Layer
-* Deploy Serving Layer: See /real-estate/Reproduce/DeployLamda/Serving_Layer
-* For scheduling: See /real-estate/Reproduce/DeployLamda/Schedule
+* Deploy Streaming Layer: See [Speed_Layer](/real-estate/docs/DeployLamda/Speed_Layer)
+* Deploy Batch Layer: See [Batch_Layer](/real-estate/docs/DeployLamda/Batch_Layer)
+* Deploy Serving Layer: See [Serving_Layer](/real-estate/docs/DeployLamda/Serving_Layer)
+* For scheduling: See [Scheduling]/real-estate/docs/DeployLamda/Schedule
+
