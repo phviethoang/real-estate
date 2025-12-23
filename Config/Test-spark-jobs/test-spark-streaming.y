@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-spark-streaming
+  namespace: application
+  labels:
+    app: test-spark-streaming
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-spark-streaming
+  template:
+    metadata:
+      labels:
+        app: test-spark-streaming
+    spec:
+      containers:
+      - name: test-streaming
+        image: hieudv774/spark:1.0.0
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: "my-cluster-kafka-bootstrap:9092"                      # No "http://"
+        - name: KAFKA_TOPIC
+          value: "my-topic"
+        - name: MINIO_HOST
+          value: "http://minio-service.minio.svc.cluster.local:9000"    # Must contain "http://"
+        - name: MINIO_USER
+          value: "bigdata123"
+        - name: MINIO_PASSWORD
+          value: "bigdata123"
+        - name: MINIO_BUCKET
+          value: "testbucket"
+        - name: SPARK_DRIVER_MEMORY
+          value: "2g"
+        resources:
+          limits:
+            memory: "3Gi"
+            cpu: "800m"
+          requests:
+            memory: "2Gi"
+            cpu: "500m"

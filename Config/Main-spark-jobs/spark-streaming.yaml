@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-streaming
+  namespace: application
+  labels:
+    app: spark-streaming
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-streaming
+  template:
+    metadata:
+      labels:
+        app: spark-streaming
+    spec:
+      containers:
+      - name: test-streaming
+        image: hdoan043/sparkstreaming:v1
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+        - name: ES_HOST
+          value: "my-es-cluster-http.elastic.svc.cluster.local"
+        - name: ES_PORT
+          value: "9200"
+        - name: ES_USER
+          value: "elastic"
+        - name: ES_PASS
+          value: "83zobLJ9694Ww5qq982qcJYt"
+        - name: SPARK_DRIVER_MEMORY
+          value: "2g"
+        resources:
+          limits:
+            memory: "3Gi"
+            cpu: "800m"
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
