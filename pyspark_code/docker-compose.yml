@@ -1,0 +1,126 @@
+# version: '3'
+# services:
+#   es01:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+#     container_name: es01
+#     environment:
+#       - node.name=es01
+#       - discovery.seed_hosts=es02,es03
+#       - cluster.initial_master_nodes=es01,es02,es03
+#       - cluster.name=es-docker-cluster
+#       - bootstrap.memory_lock=true
+#       - xpack.security.enabled=false
+#       - network.host=0.0.0.0
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#     volumes:
+#       - data01:/usr/share/elasticsearch/data
+#     ports:
+#       - "9200:9200"
+#       - "9300:9300"
+#     networks:
+#       - elastic
+
+#   es02:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+#     container_name: es02
+#     environment:
+#       - node.name=es02
+#       - discovery.seed_hosts=es01,es03
+#       - cluster.initial_master_nodes=es01,es02,es03
+#       - cluster.name=es-docker-cluster
+#       - bootstrap.memory_lock=true
+#       - xpack.security.enabled=false
+#       - network.host=0.0.0.0
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#     volumes:
+#       - data02:/usr/share/elasticsearch/data
+#     networks:
+#       - elastic
+
+#   es03:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+#     container_name: es03
+#     environment:
+#       - node.name=es03
+#       - discovery.seed_hosts=es01,es02
+#       - cluster.initial_master_nodes=es01,es02,es03
+#       - cluster.name=es-docker-cluster
+#       - bootstrap.memory_lock=true
+#       - xpack.security.enabled=false
+#       - network.host=0.0.0.0
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#     volumes:
+#       - data03:/usr/share/elasticsearch/data
+#     networks:
+#       - elastic
+
+#   kibana:
+#     image: docker.elastic.co/kibana/kibana:8.11.0
+#     ports:
+#       - "5601:5601"
+#     environment:
+#       - ELASTICSEARCH_HOSTS=http://es01:9200
+#     networks:
+#       - elastic
+
+# volumes:
+#   data01:
+#   data02:
+#   data03:
+
+# networks:
+#   elastic:
+#     driver: bridge
+
+version: '3'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node  # QUAN TRỌNG: Chế độ 1 node, không tìm kiếm cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false # Tắt bảo mật user/pass để code Python chạy ngay
+      - xpack.security.enrollment.enabled=false
+      # Giới hạn RAM cho Java Heap: 1GB là quá đủ cho 500MB data
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g" 
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es01:9200
+    depends_on:
+      - es01
+    networks:
+      - elastic
+
+volumes:
+  es_data: # Chỉ cần 1 volume cho 1 node
+
+networks:
+  elastic:
+    driver: bridge
