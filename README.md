@@ -1,4 +1,4 @@
-# Group 26 - Bigdata Project - Vietnam Real Estate Big Data System
+# Bigdata Project - Vietnam Real Estate Big Data System
 ![](docs/real-estate.jpg)
 ## 1. Giới thiệu về project
 - Trong bối cảnh thị trường bất động sản Việt Nam phát triển nóng, dữ liệu giao dịch bùng nổ nhưng lại phân mảnh, thiếu chuẩn hóa và chứa nhiều nhiễu trên các nền tảng trực tuyến. Điều này khiến nhà đầu tư gặp khó khăn trong việc đánh giá xu hướng và định giá tài sản.
